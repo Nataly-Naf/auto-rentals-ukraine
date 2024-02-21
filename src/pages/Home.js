@@ -15,10 +15,7 @@ const styles = {
 export default function Home() {
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>
-        Your contact's book
-      
-      </h1>
+      <h1 style={styles.title}>Your rental cars</h1>
     </div>
   );
 }
