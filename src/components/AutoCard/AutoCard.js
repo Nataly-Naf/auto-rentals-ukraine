@@ -21,17 +21,21 @@ import {
   setFavorites,
 } from 'redux/autosSlice';
 import { selectFavorites } from 'redux/selectors';
+import { ModalAutoCard } from 'components/ModalAutoCard/ModalAutoCard';
 
-// const customStyles = {
-//   content: {
-//     top: '50%',
-//     left: '50%',
-//     right: 'auto',
-//     bottom: 'auto',
-//     marginRight: '-50%',
-//     transform: 'translate(-50%, -50%)',
-//   },
-// };
+const customStyles = {
+  overlay: {
+    backgroundColor: '#12141780',
+  },
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
 
 Modal.setAppElement('#root');
 
@@ -101,7 +105,7 @@ export const AutoCard = ({ onCard }) => {
       </HeartButton>
       <ImgWrapper>
         {' '}
-        <Img onClick={openModal} src={onCard.img} alt={onCard.tags} />
+        <Img src={onCard.img} alt={onCard.tags} />
       </ImgWrapper>
       <InfoWrapper>
         <NameWrapper>
@@ -117,7 +121,19 @@ export const AutoCard = ({ onCard }) => {
         {onCard.rentalCompany} | {onCard.model} | {onCard.id} |{' '}
         {onCard.functionalities[0]}`
       </TagWrapper>
-      <LearnMoreButton>Learn more</LearnMoreButton>
+      <LearnMoreButton onClick={openModal}>Learn more</LearnMoreButton>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        shouldCloseOnOverlayClick={true}
+        style={customStyles}
+      >
+        <ModalAutoCard
+          onCard={onCard}
+          closeModal={closeModal}
+          isModalOpen={isModalOpen}
+        />
+      </Modal>
     </AutoItem>
   );
 };

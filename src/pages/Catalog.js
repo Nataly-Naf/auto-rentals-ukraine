@@ -5,7 +5,6 @@ import { selectError, selectIsLoading } from 'redux/selectors';
 import { FilterForm } from 'components/FilterForm/FilterForm';
 
 import { AutosList } from 'components/AutoCardList/AutoCardList';
-import { LoadMoreButton } from 'components/LoadMoreButton/LoadMoreButton';
 
 export default function Contacts() {
   const dispatch = useDispatch();
