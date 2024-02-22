@@ -1,16 +1,20 @@
-import { Navigation } from '../Navigation/Navigation';
-import { UserMenu } from '../UserMenu/UserMenu';
-import { AuthNav } from '../AuthNav/AuthNav';
+import { NavLink } from 'react-router-dom';
 import css from './AppBar.module.css';
-import { useAuth } from 'components/hooks/useAuth';
 
 export const AppBar = () => {
-  const { isLoggedIn } = useAuth();
-
   return (
     <header className={css.header}>
-      <Navigation />
-      {isLoggedIn ? <UserMenu /> : <AuthNav />}
+      <nav>
+        <NavLink className={css.link} to="/">
+          Home
+        </NavLink>
+        <NavLink className={css.link} to="/catalog">
+          Catalog
+        </NavLink>
+        <NavLink className={css.link} to="/favorites">
+          Favorites
+        </NavLink>
+      </nav>
     </header>
   );
 };
