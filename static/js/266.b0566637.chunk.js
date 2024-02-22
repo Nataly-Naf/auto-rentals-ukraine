@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkauto_rentals_ukraine=self.webpackChunkauto_rentals_ukraine||[]).push([[266],{1266:function(e,t,n){n.r(t),n.d(t,{default:function(){return a}});var i=n(184),r={container:{minHeight:"calc(100vh - 50px)",display:"flex",alignItems:"center",justifyContent:"center"},title:{fontWeight:500,fontSize:48,textAlign:"center"}};function a(){return(0,i.jsx)("div",{style:r.container,children:(0,i.jsx)("h1",{style:r.title,children:"Your rental cars"})})}}}]);
-//# sourceMappingURL=266.b0566637.chunk.js.map
