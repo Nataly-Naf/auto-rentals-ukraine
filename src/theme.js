@@ -1,6 +1,5 @@
-import { extendTheme } from '@chakra-ui/react'
+import { extendTheme } from '@chakra-ui/react';
 
-// example theme
 export const theme = extendTheme({
   textStyles: {
     h1: {
@@ -17,4 +16,4 @@ export const theme = extendTheme({
       letterSpacing: '-1%',
     },
   },
-})
+});

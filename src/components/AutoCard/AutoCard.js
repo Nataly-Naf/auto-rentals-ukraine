@@ -1,6 +1,6 @@
 import Modal from 'react-modal';
-// import { Img, AutoItem } from './ImageGalleryItem.styled';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   AutoItem,
   Img,
@@ -15,42 +15,78 @@ import {
   Price,
   HeartButton,
 } from './AutoCard.styled';
+import {
+  addToFavorites,
+  removeFromFavorites,
+  setFavorites,
+} from 'redux/autosSlice';
+import { selectFavorites } from 'redux/selectors';
 
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-  },
-};
+// const customStyles = {
+//   content: {
+//     top: '50%',
+//     left: '50%',
+//     right: 'auto',
+//     bottom: 'auto',
+//     marginRight: '-50%',
+//     transform: 'translate(-50%, -50%)',
+//   },
+// };
 
 Modal.setAppElement('#root');
-export const AutoCard = ({ onCard }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+export const AutoCard = ({ onCard }) => {
+  const dispatch = useDispatch();
+  const favoritesAutos = useSelector(selectFavorites);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  console.log(isModalOpen);
+
+  useEffect(() => {
+    const favoritesFromStorage =
+      JSON.parse(localStorage.getItem('favorites')) || [];
+    dispatch(setFavorites(favoritesFromStorage));
+  }, [dispatch]);
+
+  const isFavorite = favoritesAutos.some(favorite => favorite.id === onCard.id);
+
+  const handleToggleFavorite = () => {
+    if (isFavorite) {
+      dispatch(removeFromFavorites(onCard));
+    } else {
+      dispatch(addToFavorites(onCard));
+    }
+
+    // Обновляем избранное в localStorage после каждого изменения
+    const updatedFavorites = isFavorite
+      ? favoritesAutos.filter(favorite => favorite.id !== onCard.id)
+      : [...favoritesAutos, onCard];
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
   };
 
   const openModal = () => {
     setIsModalOpen(true);
   };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  console.log(closeModal);
+
   const address = onCard.address;
   const parts = address.split(',');
-  const city = parts[1].trim(); // взяти другий елемент, видалити пробіли
-  const country = parts[2].trim(); // взяти третій елемент, видалити пробіли
+  const city = parts[1].trim();
+  const country = parts[2].trim();
 
   return (
     <AutoItem>
-      <HeartButton>
+      <HeartButton onClick={handleToggleFavorite}>
         <svg
           width="18"
           height="16"
           viewBox="0 0 18 16"
-          fill="none"
+          fill={isFavorite ? 'red' : 'none'}
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -67,14 +103,6 @@ export const AutoCard = ({ onCard }) => {
         {' '}
         <Img onClick={openModal} src={onCard.img} alt={onCard.tags} />
       </ImgWrapper>
-      {/* <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        <img src={onCard.largeImageURL} alt={onCard.tags} />
-      </Modal> */}
       <InfoWrapper>
         <NameWrapper>
           <Make>{onCard.make} </Make>
@@ -93,34 +121,3 @@ export const AutoCard = ({ onCard }) => {
     </AutoItem>
   );
 };
-
-// export const ImageGalleryItem = ({ onPicture }) => {
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-
-//   const closeModal = () => {
-//     setIsModalOpen(false);
-//   };
-
-//   const openModal = () => {
-//     setIsModalOpen(true);
-//   };
-//   return (
-//     <ListItem>
-//       <Img
-//         onClick={openModal}
-//         src={onPicture.previewURL}
-//         alt={onPicture.tags}
-//       />
-
-//       <Modal
-//         isOpen={isModalOpen}
-//         // onAfterOpen={afterOpenModal}
-//         onRequestClose={closeModal}
-//         style={customStyles}
-//         contentLabel="Example Modal"
-//       >
-//         <Img src={onPicture.largeImageURL} alt={onPicture.tags} />
-//       </Modal>
-//     </ListItem>
-//   );
-// };
