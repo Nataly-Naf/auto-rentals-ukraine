@@ -4,6 +4,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'blue',
   },
   title: {
     fontWeight: 500,
@@ -15,7 +16,9 @@ const styles = {
 export default function Home() {
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>Your rental cars</h1>
+      <h1 style={styles.title}>
+        Your favourite rental cars company in Ukraine
+      </h1>
     </div>
   );
 }

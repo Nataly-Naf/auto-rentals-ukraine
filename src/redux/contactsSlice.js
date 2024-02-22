@@ -1,29 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchContacts, addContact, deleteContact } from "./operations";
-
+import { fetchAutos, addContact, deleteContact } from './operations';
 
 const contactsSlice = createSlice({
-  name: 'contacts',
+  name: 'autos',
   initialState: {
     contacts: {
       items: [],
-    isLoading: false,
-    error: null,
+      isLoading: false,
+      error: null,
     },
     filter: '',
-
   },
   extraReducers: {
-    [fetchContacts.pending](state, action) {
-            state.contacts.isLoading = true;
+    [fetchAutos.pending](state, action) {
+      state.contacts.isLoading = true;
     },
-    [fetchContacts.fulfilled](state, action) {
-       state.contacts.isLoading = false;
+    [fetchAutos.fulfilled](state, action) {
+      state.contacts.isLoading = false;
       state.contacts.error = null;
       state.contacts.items = action.payload;
     },
-    [fetchContacts.rejected](state, action) {
-       state.contacts.isLoading = false;
+    [fetchAutos.rejected](state, action) {
+      state.contacts.isLoading = false;
       state.contacts.error = action.payload;
     },
     [addContact.pending](state) {
@@ -32,7 +30,7 @@ const contactsSlice = createSlice({
     [addContact.fulfilled](state, action) {
       state.contacts.isLoading = false;
       state.contacts.error = null;
-      console.log(action.payload)
+      console.log(action.payload);
       state.contacts.items.push(action.payload);
     },
     [addContact.rejected](state, action) {
@@ -55,10 +53,9 @@ const contactsSlice = createSlice({
       state.contacts.isLoading = false;
       state.contacts.error = action.payload;
     },
-
   },
   reducers: {
-        setFilter: {
+    setFilter: {
       reducer(state, action) {
         state.filter = action.payload;
       },
@@ -66,5 +63,5 @@ const contactsSlice = createSlice({
   },
 });
 export const contactsReducer = contactsSlice.reducer;
-export const {setFilter, fetchingInProgress, fetchingSuccess, fetchingError } =
+export const { setFilter, fetchingInProgress, fetchingSuccess, fetchingError } =
   contactsSlice.actions;
